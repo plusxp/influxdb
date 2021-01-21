@@ -193,6 +193,9 @@ func NewServer(c *Config, buildInfo *BuildInfo) (*Server, error) {
 	s.TSDBStore = tsdb.NewStore(c.Data.Dir)
 	s.TSDBStore.EngineOptions.Config = c.Data
 
+	// Copy from coordinate.Config
+	s.TSDBStore.MetaQueryTimeout = time.Duration(c.Coordinator.MetaQueryTimeout)
+
 	// Copy TSDB configuration.
 	s.TSDBStore.EngineOptions.EngineVersion = c.Data.Engine
 	s.TSDBStore.EngineOptions.IndexVersion = c.Data.Index
@@ -538,16 +541,18 @@ func (s *Server) reportServer() {
 		numSeries       int64
 	)
 
+	ctx, cancel := s.TSDBStore.GenerateMetaQueryContext()
+	defer cancel()
 	for _, db := range dbs {
 		name := db.Name
-		n, err := s.TSDBStore.SeriesCardinality(name)
+		n, err := s.TSDBStore.SeriesCardinality(ctx, name)
 		if err != nil {
 			s.Logger.Error(fmt.Sprintf("Unable to get series cardinality for database %s: %v", name, err))
 		} else {
 			numSeries += n
 		}
 
-		n, err = s.TSDBStore.MeasurementsCardinality(name)
+		n, err = s.TSDBStore.MeasurementsCardinality(ctx, name)
 		if err != nil {
 			s.Logger.Error(fmt.Sprintf("Unable to get measurement cardinality for database %s: %v", name, err))
 		} else {

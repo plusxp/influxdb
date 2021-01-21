@@ -14,6 +14,9 @@ const (
 	// DefaultWriteTimeout is the default timeout for a complete write to succeed.
 	DefaultWriteTimeout = 10 * time.Second
 
+	// DefaultMetaQueryTimeout is the default timeout for meta-qeueries
+	DefaultMetaQueryTimeout = time.Duration(0)
+
 	// DefaultMaxConcurrentQueries is the maximum number of running queries.
 	// A value of zero will make the maximum query limit unlimited.
 	DefaultMaxConcurrentQueries = 0
@@ -32,6 +35,7 @@ type Config struct {
 	WriteTimeout         toml.Duration `toml:"write-timeout"`
 	MaxConcurrentQueries int           `toml:"max-concurrent-queries"`
 	QueryTimeout         toml.Duration `toml:"query-timeout"`
+	MetaQueryTimeout     toml.Duration `toml:"meta-query-timeout"`
 	LogQueriesAfter      toml.Duration `toml:"log-queries-after"`
 	MaxSelectPointN      int           `toml:"max-select-point"`
 	MaxSelectSeriesN     int           `toml:"max-select-series"`
@@ -43,6 +47,7 @@ func NewConfig() Config {
 	return Config{
 		WriteTimeout:         toml.Duration(DefaultWriteTimeout),
 		QueryTimeout:         toml.Duration(query.DefaultQueryTimeout),
+		MetaQueryTimeout:     toml.Duration(DefaultMetaQueryTimeout),
 		MaxConcurrentQueries: DefaultMaxConcurrentQueries,
 		MaxSelectPointN:      DefaultMaxSelectPointN,
 		MaxSelectSeriesN:     DefaultMaxSelectSeriesN,
@@ -61,3 +66,4 @@ func (c Config) Diagnostics() (*diagnostics.Diagnostics, error) {
 		"max-select-buckets":     c.MaxSelectBucketsN,
 	}), nil
 }
+
