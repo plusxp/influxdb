@@ -60,7 +60,7 @@ func (c Config) Diagnostics() (*diagnostics.Diagnostics, error) {
 		"write-timeout":          c.WriteTimeout,
 		"max-concurrent-queries": c.MaxConcurrentQueries,
 		"query-timeout":          c.QueryTimeout,
-		"meta-query-timeout":	  c.MetaQueryTimeout,
+		"meta-query-timeout":     c.MetaQueryTimeout,
 		"log-queries-after":      c.LogQueriesAfter,
 		"max-select-point":       c.MaxSelectPointN,
 		"max-select-series":      c.MaxSelectSeriesN,
