@@ -171,6 +171,10 @@
   # can help prevent run away queries.  Setting the value to 0 disables the limit.
   # query-timeout = "0s"
 
+  # The maximum time a meta query will is allowed to execute before being killed by the system.  This limit
+  # can help prevent run away queries.  Setting the value to 0 disables the limit.
+  # meta-query-timeout = "0s"
+
   # The time threshold when a query will be logged as a slow query.  This limit can be set to help
   # discover slow or resource intensive queries.  Setting the value to 0 disables the slow query logging.
   # log-queries-after = "0s"
