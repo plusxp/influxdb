@@ -66,4 +66,3 @@ func (c Config) Diagnostics() (*diagnostics.Diagnostics, error) {
 		"max-select-buckets":     c.MaxSelectBucketsN,
 	}), nil
 }
-

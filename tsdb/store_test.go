@@ -1490,7 +1490,6 @@ func TestStore_TagValues(t *testing.T) {
 		},
 	}
 
-
 	setup := func(index string) (*Store, []uint64) { // returns shard ids
 		s := MustOpenStore(index)
 
@@ -2297,7 +2296,6 @@ func BenchmarkStore_TagValues(b *testing.B) {
 		}
 		return s, shardIDs
 	}
-
 
 	// SHOW TAG VALUES WITH KEY IN ("host", "shard")
 	cond1 := &influxql.ParenExpr{

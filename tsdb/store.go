@@ -93,7 +93,7 @@ type Store struct {
 	// is stored by shard.
 	epochs map[uint64]*epochTracker
 
-	EngineOptions EngineOptions
+	EngineOptions    EngineOptions
 	MetaQueryTimeout time.Duration
 
 	baseLogger *zap.Logger
@@ -1839,14 +1839,13 @@ func (s *Store) TagValues(ctx context.Context, auth query.Authorizer, shardIDs [
 	return result, nil
 }
 
-func (s *Store) GenerateMetaQueryContext() (context.Context, context.CancelFunc){
+func (s *Store) GenerateMetaQueryContext() (context.Context, context.CancelFunc) {
 	if s.MetaQueryTimeout > time.Duration(0) {
 		return context.WithTimeout(context.Background(), s.MetaQueryTimeout)
 	} else {
 		return context.WithCancel(context.Background())
 	}
 }
-
 
 // mergeTagValues merges multiple sorted sets of temporary tagValues using a
 // direct k-way merge whilst also removing duplicated entries. The result is a
